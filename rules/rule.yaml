@@ -1,0 +1,17 @@
+controller:
+#  - name: controller名
+#    imports:
+#      - 需要导入的包
+#    replace: # 替换点
+#      - pos: 替换点
+#        rule: 替换的内容
+
+model:
+#  - name: model名
+#    field:
+#      add:
+#        - 添加
+#      update:
+#        - 修改
+#      del:
+#        - 删除
