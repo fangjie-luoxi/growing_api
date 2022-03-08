@@ -28,7 +28,6 @@ func NewRouter() *gin.Engine {
 	_ = r.SetTrustedProxies(nil)
 	// api组
 	apiGroup := r.Group(global.Config.DefaultString("appName", "api"))
-	apiGroup.Static("/static", "./static") // 静态文件夹
 	// 授权中间件
 	jwt, err := middleware.JWT(global.Login)
 	if err != nil {
@@ -41,6 +40,7 @@ func NewRouter() *gin.Engine {
 			apiGroup.Use(middleware.NewAuthorizer(global.Casbin.Enforcer, global.DBEngine, global.Cache))
 		}
 	}
+	apiGroup.Static("/static", "./static")             // 静态文件夹
 	apiGroup.POST("/upload/files", upload.FilesUpload) // 多文件上传
 	global.Login.Api(apiGroup, jwt)                    // 登录路由
 	if global.Config.DefaultBool("system", false) {

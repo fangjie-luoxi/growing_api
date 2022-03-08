@@ -22,6 +22,7 @@ type User struct {
 	Email     string         `gorm:"type:varchar(255);index:idx_email" binding:"max=255"`    // 邮箱
 	UserType  string         `gorm:"type:varchar(45)"`                                       // 用户类型 `gorm:"type:varchar(10);default:user;not null;comment:用户类型 enum:super:超级管理员,admin:机构管理员,user:普通用户#" binding:"max=10,required"`
 	Status    string         `gorm:"type:varchar(10)"`                                       // 用户状态 default:r;comment:状态 enum:r:正常,c:禁用#
+	Integral  float64        `gorm:"column:integral"`
 }
 
 func (m *User) TableName() string {

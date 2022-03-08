@@ -7,28 +7,24 @@ import (
 	"gorm.io/gorm"
 )
 
-// GrIntegralR 积分记录
-type GrIntegralR struct {
+// GrRuleRecord 规则记录表
+type GrRuleRecord struct {
 	Id        int            `gorm:"column:id;primaryKey"`
 	CreatedAt time.Time      `gorm:"column:created_at"`
 	UpdatedAt time.Time      `gorm:"column:updated_at"`
 	DeletedAt gorm.DeletedAt `json:"-"`
-	UserId    int            `gorm:"column:user_id"`
-	InType    string         `gorm:"column:in_type;size:10;default:i" binding:"max=10"` // 类型 enum:i:增加,o:扣除#
-	Num       float64        `gorm:"column:num"`                                        // 增加或扣除的积分
-	ReTpye    string         `gorm:"column:re_tpye;size:10" binding:"max=10"`           // 关联(积分变动所关联的项) enum:tt:目标,tk:任务,re:规则#
-	ReId      int            `gorm:"column:re_id"`                                      // 关联所对应的id
-	Desc      string         `gorm:"column:desc;size:255" binding:"max=255"`            // 描述
-	User      *User          // 一对多,从表
+	GrRuleId  int            `gorm:"column:gr_rule_id"`
+	Date      *time.Time     `gorm:"column:date"`
+	GrRule    *GrRule        // 一对多,从表
 }
 
 // pos1
 
-func (m *GrIntegralR) TableName() string {
-	return "gr_integral_r"
+func (m *GrRuleRecord) TableName() string {
+	return "gr_rule_record"
 }
 
-func (m *GrIntegralR) GetM2MJoin(m2m string) string {
+func (m *GrRuleRecord) GetM2MJoin(m2m string) string {
 	joinStr := ""
 	switch m2m {
 
@@ -36,8 +32,8 @@ func (m *GrIntegralR) GetM2MJoin(m2m string) string {
 	return joinStr
 }
 
-func (m *GrIntegralR) Get(db *gorm.DB, q *query.Query) ([]*GrIntegralR, int64, error) {
-	var res []*GrIntegralR
+func (m *GrRuleRecord) Get(db *gorm.DB, q *query.Query) ([]*GrRuleRecord, int64, error) {
+	var res []*GrRuleRecord
 	var count int64
 	tx := db.Model(m)
 	tx.Scopes(q.DBQuery())
@@ -52,15 +48,15 @@ func (m *GrIntegralR) Get(db *gorm.DB, q *query.Query) ([]*GrIntegralR, int64, e
 	return res, count, tx.Error
 }
 
-func (m *GrIntegralR) GetOne(db *gorm.DB, q *query.Query) error {
+func (m *GrRuleRecord) GetOne(db *gorm.DB, q *query.Query) error {
 	return db.Scopes(q.DBQuery()).First(m).Error
 }
 
-func (m *GrIntegralR) Create(db *gorm.DB) error {
+func (m *GrRuleRecord) Create(db *gorm.DB) error {
 	return db.Create(m).Error
 }
 
-func (m *GrIntegralR) Update(db *gorm.DB, v map[string]interface{}) error {
+func (m *GrRuleRecord) Update(db *gorm.DB, v map[string]interface{}) error {
 	var fieldList []string
 	for k := range v {
 		fieldList = append(fieldList, k)
@@ -68,15 +64,15 @@ func (m *GrIntegralR) Update(db *gorm.DB, v map[string]interface{}) error {
 	return db.Model(m).Select(fieldList).Updates(m).Error
 }
 
-func (m *GrIntegralR) UpdateByQuery(db *gorm.DB, q *query.Query, v map[string]interface{}) error {
+func (m *GrRuleRecord) UpdateByQuery(db *gorm.DB, q *query.Query, v map[string]interface{}) error {
 	return db.Model(m).Scopes(q.DBQuery()).Updates(v).Error
 }
 
-func (m *GrIntegralR) UpdateFull(db *gorm.DB, v map[string]interface{}) error {
+func (m *GrRuleRecord) UpdateFull(db *gorm.DB, v map[string]interface{}) error {
 	return db.Model(m).Session(&gorm.Session{FullSaveAssociations: true}).Updates(v).Error
 }
 
-func (m *GrIntegralR) Updates(db *gorm.DB, v []*GrIntegralR) error {
+func (m *GrRuleRecord) Updates(db *gorm.DB, v []*GrRuleRecord) error {
 	err := db.Transaction(func(tx *gorm.DB) error {
 		tx.Model(m).Session(&gorm.Session{FullSaveAssociations: true})
 		for _, item := range v {
@@ -90,7 +86,7 @@ func (m *GrIntegralR) Updates(db *gorm.DB, v []*GrIntegralR) error {
 }
 
 // UpdateM2M 修改多对多关系
-func (m *GrIntegralR) UpdateM2M(db *gorm.DB, field string, addIds, delIds, repIds []int) error {
+func (m *GrRuleRecord) UpdateM2M(db *gorm.DB, field string, addIds, delIds, repIds []int) error {
 	var addI interface{}
 	var delI interface{}
 	var repI interface{}
@@ -107,10 +103,10 @@ func (m *GrIntegralR) UpdateM2M(db *gorm.DB, field string, addIds, delIds, repId
 	return nil
 }
 
-func (m *GrIntegralR) Delete(db *gorm.DB) error {
+func (m *GrRuleRecord) Delete(db *gorm.DB) error {
 	return db.Where("id = ?", m.Id).Delete(m).Error
 }
 
-func (m *GrIntegralR) Deletes(db *gorm.DB, ids []int) error {
-	return db.Delete([]GrIntegralR{}, ids).Error
+func (m *GrRuleRecord) Deletes(db *gorm.DB, ids []int) error {
+	return db.Delete([]GrRuleRecord{}, ids).Error
 }

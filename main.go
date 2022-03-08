@@ -13,6 +13,7 @@ import (
 	"github.com/fangjie-luoxi/growing_api/pkg/orm"
 	"github.com/fangjie-luoxi/growing_api/pkg/wechat"
 	"github.com/fangjie-luoxi/growing_api/routers"
+	"github.com/fangjie-luoxi/growing_api/rules/cron"
 	"github.com/fangjie-luoxi/growing_api/system/login"
 )
 
@@ -21,6 +22,7 @@ var confStr string // 静态配置文件
 
 func main() {
 	setUp()
+	cron.Cron()
 
 	r := routers.NewRouter()
 	_ = r.Run(":" + global.Config.DefaultString("httpPort", "8080"))

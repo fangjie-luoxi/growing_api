@@ -15,14 +15,14 @@ type GrTask struct {
 	DeletedAt  gorm.DeletedAt `json:"-"`
 	UserId     int            `gorm:"column:user_id"`
 	GrTargetId int            `gorm:"column:gr_target_id;default:0"`
-	Date       *time.Time     `gorm:"column:date"`                                  // 任务时间
-	TkTitle    string         `gorm:"column:tk_title;size:45" binding:"max=45"`     // 任务标题
-	TkContent  string         `gorm:"column:tk_content;size:255" binding:"max=255"` // 任务内容
-	TtNum      int            `gorm:"column:tt_num"`                                // 任务数量
-	TtUnit     string         `gorm:"column:tt_unit;size:45" binding:"max=45"`      // 任务单位
-	Num        int            `gorm:"column:num"`                                   // 积分
-	Rm         string         `gorm:"column:rm;size:255" binding:"max=255"`         // 备注
-	Status     string         `gorm:"column:status;size:45" binding:"max=45"`       // 状态 enum:s:完成,n:未完成,r:进行中#
+	TkTitle    string         `gorm:"column:tk_title;size:45" binding:"max=45"`         // 任务标题
+	TkContent  string         `gorm:"column:tk_content;size:255" binding:"max=255"`     // 任务内容
+	TtNum      float64        `gorm:"column:tt_num"`                                    // 任务数量
+	TtUnit     string         `gorm:"column:tt_unit;size:45" binding:"max=45"`          // 任务单位
+	Num        float64        `gorm:"column:num"`                                       // 积分
+	Rm         string         `gorm:"column:rm;size:255" binding:"max=255"`             // 备注
+	Status     string         `gorm:"column:status;size:45;default:b" binding:"max=45"` // 状态 enum:s:完成,n:未完成,r:进行中,b:未开始#
+	Date       *time.Time     `gorm:"column:date"`                                      // 任务日期
 	User       *User          // 一对多,从表
 	GrTarget   *GrTarget      // 一对多,从表
 }

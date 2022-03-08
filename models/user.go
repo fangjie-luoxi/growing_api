@@ -9,34 +9,15 @@ import (
 
 // User 用户表
 type User struct {
-	Id            int            `gorm:"column:id;primaryKey"`
-	CreatedAt     time.Time      `gorm:"column:created_at"`
-	UpdatedAt     time.Time      `gorm:"column:updated_at"`
-	DeletedAt     gorm.DeletedAt `json:"-"`
-	Integral      int64          `gorm:"column:integral"`
-	SysOrgId      int            `gorm:"column:sys_org_id"`
-	LoginCode     string         `gorm:"column:login_code;size:45" binding:"max=45"`
-	Password      string         `gorm:"column:password;size:255" binding:"max=255"`
-	UserCode      string         `gorm:"column:user_code;size:45" binding:"max=45"`
-	UserName      string         `gorm:"column:user_name;size:45" binding:"max=45"`
-	Phone         string         `gorm:"column:phone;size:45" binding:"max=45"`
-	Avatar        string         `gorm:"column:avatar;size:255" binding:"max=255"`
-	Email         string         `gorm:"column:email;size:255" binding:"max=255"`
-	UserType      string         `gorm:"column:user_type;size:45" binding:"max=45"`
-	Status        string         `gorm:"column:status;size:45;default:r" binding:"max=45"`
-	Birth         *time.Time     `gorm:"column:birth"`
-	Sex           string         `gorm:"column:sex;size:45" binding:"max=45"`
-	CardNo        string         `gorm:"column:card_no;size:45" binding:"max=45"`
-	LastLoginTime *time.Time     `gorm:"column:last_login_time"`
-	Address       string         `gorm:"column:address;size:255" binding:"max=255"`
-	Profile       string         `gorm:"column:profile"`
-	SysDeptId     int64          `gorm:"column:sys_dept_id;default:0"`
-	SysPostId     int64          `gorm:"column:sys_post_id;default:0"`
-	GrIntegralRs  []*GrIntegralR // 一对多,主表
-	GrRules       []*GrRule      // 一对多,主表
-	GrTargets     []*GrTarget    // 一对多,主表
-	GrTasks       []*GrTask      // 一对多,主表
-	ThirdAuths    []*ThirdAuth   // 一对多,主表
+	Id           int            `gorm:"column:id;primaryKey"`
+	CreatedAt    time.Time      `gorm:"column:created_at"`
+	UpdatedAt    time.Time      `gorm:"column:updated_at"`
+	DeletedAt    gorm.DeletedAt `json:"-"`
+	Integral     float64        `gorm:"column:integral"`
+	GrIntegralRs []*GrIntegralR // 一对多,主表
+	GrRules      []*GrRule      // 一对多,主表
+	GrTargets    []*GrTarget    // 一对多,主表
+	GrTasks      []*GrTask      // 一对多,主表
 }
 
 // pos1

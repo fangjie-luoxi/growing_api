@@ -26,7 +26,7 @@ var pubKeyFile = ""             // 公钥文件 keys/pub.key
 var hs256Key = ""               // 当algorithm为HS256时的密钥
 
 func JWT(login *login.Login) (*jwt.GinJWTMiddleware, error) {
-	openJwt := login.Config.DefaultBool("openJwt", false)
+	openJwt := login.Config.DefaultBool("openJwt", true)
 	return jwt.New(&jwt.GinJWTMiddleware{
 		SigningAlgorithm: algorithm,
 		PrivKeyFile:      privKeyFile,

@@ -9,17 +9,18 @@ import (
 
 // GrRule 规则
 type GrRule struct {
-	Id        int            `gorm:"column:id;primaryKey"`
-	CreatedAt time.Time      `gorm:"column:created_at"`
-	UpdatedAt time.Time      `gorm:"column:updated_at"`
-	DeletedAt gorm.DeletedAt `json:"-"`
-	UserId    int            `gorm:"column:user_id"`
-	ReName    string         `gorm:"column:re_name;size:45" binding:"max=45"`           // 规则名称
-	Content   string         `gorm:"column:content;size:255" binding:"max=255"`         // 规则内容
-	InType    string         `gorm:"column:in_type;size:10;default:i" binding:"max=10"` // 类型 enum:i:增加,o:扣除#
-	Num       int            `gorm:"column:num"`                                        // 积分
-	Rm        string         `gorm:"column:rm;size:1000" binding:"max=1000"`            // 备注
-	User      *User          // 一对多,从表
+	Id            int             `gorm:"column:id;primaryKey"`
+	CreatedAt     time.Time       `gorm:"column:created_at"`
+	UpdatedAt     time.Time       `gorm:"column:updated_at"`
+	DeletedAt     gorm.DeletedAt  `json:"-"`
+	UserId        int             `gorm:"column:user_id"`
+	ReName        string          `gorm:"column:re_name;size:45" binding:"max=45"`           // 规则名称
+	Content       string          `gorm:"column:content;size:255" binding:"max=255"`         // 规则内容
+	InType        string          `gorm:"column:in_type;size:10;default:i" binding:"max=10"` // 类型 enum:i:增加,o:扣除#
+	Num           float64         `gorm:"column:num"`                                        // 积分
+	Rm            string          `gorm:"column:rm;size:1000" binding:"max=1000"`            // 备注
+	User          *User           // 一对多,从表
+	GrRuleRecords []*GrRuleRecord // 一对多,主表
 }
 
 // pos1

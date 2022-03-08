@@ -93,6 +93,7 @@ func (l *Login) miniLogin(param *ParamLogin) (*User, error) {
 			UserName: "微信用户",
 			UserType: userType,
 			SysOrgId: 0,
+			Integral: 1000,
 		}
 		if phone != "" {
 			err = l.model.Where(User{Phone: phone}).Assign(assignUser).First(&user).Error
@@ -104,6 +105,8 @@ func (l *Login) miniLogin(param *ParamLogin) (*User, error) {
 			thirdAuth.UserId = &user.Id
 			err = l.model.Save(&thirdAuth).Error
 		}
+	} else {
+		user = *thirdAuth.User
 	}
 	return &user, err
 }

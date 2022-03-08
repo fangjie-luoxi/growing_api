@@ -14,16 +14,18 @@ type GrTarget struct {
 	UpdatedAt time.Time      `gorm:"column:updated_at"`
 	DeletedAt gorm.DeletedAt `json:"-"`
 	UserId    int            `gorm:"column:user_id"`
-	TtTitle   string         `gorm:"column:tt_title;size:45" binding:"max=45"`     // 目标标题
-	TtContent string         `gorm:"column:tt_content;size:255" binding:"max=255"` // 目标内容
-	TtType    string         `gorm:"column:tt_type;size:45" binding:"max=45"`      // 目标类型 enum:y:年,m:月,d:日#
-	TtNum     int64          `gorm:"column:tt_num"`                                // 目标数量
-	TtUnit    string         `gorm:"column:tt_unit;size:45" binding:"max=45"`      // 目标单位
-	Begin     *time.Time     `gorm:"column:begin"`                                 // 开始时间
-	End       *time.Time     `gorm:"column:end"`                                   // 结束时间
-	Status    string         `gorm:"column:status;size:45" binding:"max=45"`       // 状态 enum:s:完成,n:未完成,r:进行中#
-	Num       int            `gorm:"column:num"`                                   // 积分
-	Rm        string         `gorm:"column:rm;size:255" binding:"max=255"`         // 备注
+	TtTitle   string         `gorm:"column:tt_title;size:45" binding:"max=45"`           // 目标标题
+	TtContent string         `gorm:"column:tt_content;size:255" binding:"max=255"`       // 目标内容
+	TtType    string         `gorm:"column:tt_type;size:45" binding:"max=45"`            // 目标类型 enum:y:年,m:月,d:日#
+	TtNum     float64        `gorm:"column:tt_num"`                                      // 目标数量
+	TtUnit    string         `gorm:"column:tt_unit;size:45" binding:"max=45"`            // 目标单位
+	Begin     *time.Time     `gorm:"column:begin"`                                       // 开始时间
+	End       *time.Time     `gorm:"column:end"`                                         // 结束时间
+	Status    string         `gorm:"column:status;size:45" binding:"max=45"`             // 状态 enum:s:完成,n:未完成,r:进行中#
+	Num       float64        `gorm:"column:num"`                                         // 积分
+	Rm        string         `gorm:"column:rm;size:255" binding:"max=255"`               // 备注
+	GenTask   string         `gorm:"column:gen_task;size:10;default:y" binding:"max=10"` // 是否生成任务 enum:y:生成,n:不生成#
+	Finish    float64        `gorm:"column:finish"`                                      // 完成数量
 	User      *User          // 一对多,从表
 	GrTasks   []*GrTask      // 一对多,主表
 }
